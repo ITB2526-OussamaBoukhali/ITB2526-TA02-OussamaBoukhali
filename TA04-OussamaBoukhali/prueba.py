@@ -36,14 +36,14 @@ def procesar_incidencias():
     estadisticas_urgencia = Counter()
 
     if not os.path.exists(xml_file):
-        print(f"❌ Archivo XML no encontrado: {xml_file}")
+        print("\033[91m❌ Archivo XML no encontrado.\033[0m")
         return [], 0, 0, estadisticas_urgencia
 
     try:
         tree = ET.parse(xml_file)
         root = tree.getroot()
     except ET.ParseError as e:
-        print("❌ Error al parsear el XML:", e)
+        print("\033[91m❌ Error al parsear el XML:\033[0m", e)
         return [], 0, 0, estadisticas_urgencia
 
     for i, reg in enumerate(root.findall("Registro"), start=1):
@@ -101,7 +101,7 @@ def mostrar_estadisticas(incidencias, total_registros, incorrectas, estadisticas
     porcentaje_incorrectas = (incorrectas / total_registros) * 100 if total_registros else 0
 
     print(f"\n✅ Total incidencias procesadas: {correctas}")
-    print(f"❌ Total incidencias descartadas: {incorrectas}")
+    print(f"\033[91m❌ Total incidencias descartadas: {incorrectas}\033[0m")
     print(f"📊 Porcentaje correctas: {porcentaje_correctas:.2f}%")
     print(f"📊 Porcentaje incorrectas: {porcentaje_incorrectas:.2f}%")
 
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     incidencias, total, incorrectas, estad_urgencia = procesar_incidencias()
 
     if not incidencias and total == 0 and incorrectas == 0:
-        print("⚠️ No se puede continuar sin el archivo XML.")
+        print("\033[91m⚠️ No se puede continuar sin el archivo XML.\033[0m")
     else:
         while True:
             print("\n📌 Menú principal")
@@ -139,4 +139,3 @@ if __name__ == "__main__":
             elif opcion == "3":
                 print("👋 Saliendo del programa...")
                 break
-            
